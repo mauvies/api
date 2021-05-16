@@ -1,11 +1,12 @@
 import axios, { AxiosResponse } from 'axios';
+import config from '../config/default'
 
 export const fetchOwnerAccount = async (owner: string) => {
 
   try {
 
     const response: AxiosResponse = await axios.get(
-      `https://api.github.com/users/${owner}`
+      `${config.API_URL}/users/${owner}`
     );
     
     return response.data;
@@ -20,7 +21,7 @@ export const fetchOwnerRepos = async (owner: string) => {
   try {
 
     const response: AxiosResponse = await axios.get(
-      `https://api.github.com/users/${owner}/repos`
+      `${config.API_URL}/users/${owner}/repos`
     );
 
     return response.data;
@@ -36,7 +37,7 @@ export const fetchRepo = async (id: string) => {
   try {
 
     const response: AxiosResponse = await axios.get(
-      `https://api.github.com/repositories/${id}`
+      `${config.API_URL}/repositories/${id}`
     
       );
     

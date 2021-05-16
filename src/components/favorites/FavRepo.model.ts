@@ -1,4 +1,6 @@
-import mongoose, { model, Document } from 'mongoose';
+import mongoose, { model, Document, Schema } from 'mongoose';
+
+import { RepoResource } from '../repos/repos.types';
 
 export interface FavRepoInterface extends Document {
   repoId: string;
@@ -11,7 +13,7 @@ export interface FavRepoInterface extends Document {
   updatedAt: string;
 }
 
-const FavRepoSchema = new mongoose.Schema<FavRepoInterface>(
+const FavRepoSchema: Schema = new mongoose.Schema(
   {
     repoId: {
       type: String,
@@ -39,4 +41,21 @@ const FavRepoSchema = new mongoose.Schema<FavRepoInterface>(
   }
 );
 
-export default model('FavRepo', FavRepoSchema);
+export const checkIfRepoIsFav = (
+  reposResource: RepoResource[],
+  favRepos: FavRepoInterface[]
+): RepoResource[] => {
+
+  return reposResource.map((repo: RepoResource): RepoResource => {
+
+    const isRepoFav = favRepos
+      .map((repo: any) => repo.repoId)
+      .includes(repo.id.toString());
+
+    return { ...repo, isFav: !!isRepoFav };
+
+  });
+
+};
+
+export default model<FavRepoInterface>('FavRepo', FavRepoSchema);

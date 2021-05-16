@@ -1,5 +1,15 @@
 @api = http://localhost:5000
 
+# --- REPOS --- #
+
+### Get repos from api
+GET {{api}}/repos
+Content-Type: application/json
+
+{
+    "owner": "trioteca"
+}
+
 # --- FAVORITE REPOS --- #
 
 ### Get favorites
@@ -11,7 +21,7 @@ POST {{api}}/favorites
 Content-Type: application/json
 
 {
-    "id": "363411910"
+    "id": "337654669"
 }
 
 ### Delete repo
