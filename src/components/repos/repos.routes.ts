@@ -3,6 +3,6 @@ import * as reposCtrl from './repos.controller';
 
 const router = Router();
 
-router.get('/', reposCtrl.getRepos);
+router.post('/', reposCtrl.getRepos);
 
 export default router;

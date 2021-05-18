@@ -6,11 +6,10 @@ import FavRepo, { checkIfRepoIsFav } from '../favorites/FavRepo.model';
 import { RepoResource, OwnerResource } from './repos.types';
 
 export const getRepos: RequestHandler = async (req, res) => {
-  const owner: string = req.body.owner;
-
+  const { owner, page } = req.body;
   try {
     const ownerGeneralInfo = await fetchOwnerAccount(owner);
-    const ownerRepos = await fetchOwnerRepos(owner);
+    const ownerRepos = await fetchOwnerRepos(owner, page);
 
     const reposResource: RepoResource[] = reposPrepareResource(ownerRepos);
     const favRepos = await FavRepo.find();
@@ -18,7 +17,8 @@ export const getRepos: RequestHandler = async (req, res) => {
 
     const ownerResource: OwnerResource = ownerPrepareResource(
       ownerGeneralInfo,
-      reposResourceCheckedIfFav
+      reposResourceCheckedIfFav,
+      page
     );
 
     return res.json({
@@ -26,6 +26,7 @@ export const getRepos: RequestHandler = async (req, res) => {
       data: ownerResource,
     });
   } catch (error) {
+    console.log(error);
     return res.status(404).json({ error: `Something went wrong` });
   }
 };

@@ -3,25 +3,25 @@
 # --- REPOS --- #
 
 ### Get repos from api
-GET {{api}}/repos
+POST {{api}}/repos
 Content-Type: application/json
 
 {
-    "owner": "trioteca"
+    "owner": "google",
+    "page": 3
 }
 
 # --- FAVORITE REPOS --- #
 
 ### Get favorites
 GET {{api}}/favorites
-Content-Type: application/json
 
 ### Add repo to favorites
 POST {{api}}/favorites  
 Content-Type: application/json
 
 {
-    "id": "337654669"
+    "id": "367436552"
 }
 
 ### Delete repo
