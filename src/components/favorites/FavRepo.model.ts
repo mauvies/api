@@ -1,14 +1,16 @@
 import mongoose, { model, Document, Schema } from 'mongoose';
 
-import { RepoResource } from '../repos/repos.types';
+import { IRepoResource } from '../repos/repos.types';
 
-export interface FavRepoInterface extends Document {
+export interface IFavRepo extends Document {
   repoId: string;
   owner: string;
   name: string;
   description: string;
   language: string;
   cloneUrl: string;
+  repoCreatedAt: string;
+  repoUpdatedAt: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -34,6 +36,12 @@ const FavRepoSchema: Schema = new mongoose.Schema(
     cloneUrl: {
       type: String,
     },
+    repoCreatedAt: {
+      type: String,
+    },
+    repoUpdatedAt: {
+      type: String,
+    },
   },
   {
     versionKey: false,
@@ -42,20 +50,16 @@ const FavRepoSchema: Schema = new mongoose.Schema(
 );
 
 export const checkIfRepoIsFav = (
-  reposResource: RepoResource[],
-  favRepos: FavRepoInterface[]
-): RepoResource[] => {
-
-  return reposResource.map((repo: RepoResource): RepoResource => {
-
+  reposResource: IRepoResource[],
+  favRepos: IFavRepo[]
+): IRepoResource[] => {
+  return reposResource.map((repoResource: IRepoResource): IRepoResource => {
     const isRepoFav = favRepos
-      .map((repo: any) => repo.repoId)
-      .includes(repo.id.toString());
+      .map((favRepo: any) => favRepo.repoId)
+      .includes(repoResource.id.toString());
 
-    return { ...repo, isFav: !!isRepoFav };
-
+    return { ...repoResource, isFav: !!isRepoFav };
   });
-
 };
 
-export default model<FavRepoInterface>('FavRepo', FavRepoSchema);
+export default model<IFavRepo>('FavRepo', FavRepoSchema);
