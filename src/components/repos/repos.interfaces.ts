@@ -1,4 +1,4 @@
-export type RepoResource = {
+export interface IRepoResource {
   id: string;
   name: string;
   fullName: string;
@@ -8,9 +8,9 @@ export type RepoResource = {
   description: string;
   createdAt: string;
   updatedAt: string;
-};
+}
 
-export type OwnerResource = {
+export interface IOwnerResource {
   id: string;
   name: string;
   username: string;
@@ -20,8 +20,8 @@ export type OwnerResource = {
   email: string;
   bio: string;
   reposNumber: number;
-  repos: RepoResource[];
+  repos: IRepoResource[];
   page: number;
   createdAt: string;
   updatedAt: string;
-};
+}

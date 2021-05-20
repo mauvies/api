@@ -1,9 +1,9 @@
-import { RepoResource, OwnerResource } from './repos.types';
+import { IRepoResource, IOwnerResource } from './repos.interfaces';
 
-export const reposPrepareResource = (ownerRepos: any): RepoResource[] => {
+export const reposPrepareResource = (ownerRepos: any): IRepoResource[] => {
   return ownerRepos
     .map(
-      (repo: any): RepoResource => ({
+      (repo: any): IRepoResource => ({
         id: repo.id,
         name: repo.name,
         fullName: repo.full_name,
@@ -15,7 +15,7 @@ export const reposPrepareResource = (ownerRepos: any): RepoResource[] => {
         updatedAt: repo.updated_at,
       })
     )
-    .sort((a: RepoResource, b: RepoResource) =>
+    .sort((a: IRepoResource, b: IRepoResource) =>
       a.updatedAt > b.updatedAt ? -1 : 1
     );
 };
@@ -24,7 +24,7 @@ export const ownerPrepareResource = (
   ownerGeneralInfo: any,
   repos: any,
   page: number
-): OwnerResource => ({
+): IOwnerResource => ({
   id: ownerGeneralInfo.id,
   name: ownerGeneralInfo.name,
   username: ownerGeneralInfo.login,

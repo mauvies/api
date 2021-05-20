@@ -1,6 +1,6 @@
 import mongoose, { model, Document, Schema } from 'mongoose';
 
-import { IRepoResource } from '../repos/repos.types';
+import { IRepoResource } from '../repos/repos.interfaces';
 
 export interface IFavRepo extends Document {
   repoId: string;
