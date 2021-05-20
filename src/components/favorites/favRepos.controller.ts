@@ -1,22 +1,22 @@
 import { RequestHandler } from 'express';
 
 import { fetchRepo } from '../../services/fetchApi';
-import FavRepo, { FavRepoInterface } from './FavRepo.model';
+import FavRepo, { IFavRepo } from './FavRepo.model';
 
 interface CreateFavRepo {
-  repoId: FavRepoInterface['repoId'];
-  owner: FavRepoInterface['owner'];
-  name: FavRepoInterface['name'];
-  description: FavRepoInterface['description'];
-  language: FavRepoInterface['language'];
-  cloneUrl: FavRepoInterface['cloneUrl'];
-  createdAt: FavRepoInterface['createdAt'];
-  updatedAt: FavRepoInterface['updatedAt'];
+  repoId: IFavRepo['repoId'];
+  owner: IFavRepo['owner'];
+  name: IFavRepo['name'];
+  description: IFavRepo['description'];
+  language: IFavRepo['language'];
+  cloneUrl: IFavRepo['cloneUrl'];
+  repoCreatedAt: IFavRepo['repoCreatedAt'];
+  repoUpdatedAt: IFavRepo['repoUpdatedAt'];
 }
 
 export const getFavRepos: RequestHandler = async (req, res) => {
   try {
-    const favRepos: FavRepoInterface[] = await FavRepo.find();
+    let favRepos: IFavRepo[] = await FavRepo.find();
 
     if (!favRepos)
       return res
@@ -26,18 +26,25 @@ export const getFavRepos: RequestHandler = async (req, res) => {
     if (!favRepos.length)
       return res.json({ msg: 'You do not have favorite repos yet' });
 
+    favRepos = favRepos.sort((a: IFavRepo, b: IFavRepo) =>
+      a.repoUpdatedAt > b.repoUpdatedAt ? -1 : 1
+    );
+
     return res.json({
+      status: 200,
       msg: 'Favorites repos fetched successfully',
       data: favRepos,
     });
   } catch (error) {
-    throw new Error(error);
+    return res
+      .status(404)
+      .json({ error: 'Favorite repos could not be fetched' });
   }
 };
 
 export const addRepo: RequestHandler = async (req, res) => {
   try {
-    const repoAlreadyExists: FavRepoInterface | null = await FavRepo.findOne({
+    const repoAlreadyExists: IFavRepo | null = await FavRepo.findOne({
       repoId: req.body.id,
     });
 
@@ -57,17 +64,17 @@ export const addRepo: RequestHandler = async (req, res) => {
       description: repo.description,
       language: repo.language,
       cloneUrl: repo.clone_url,
-      createdAt: repo.created_at,
-      updatedAt: repo.updated_at,
+      repoCreatedAt: repo.created_at,
+      repoUpdatedAt: repo.updated_at,
     };
 
-    const repoAdded: FavRepoInterface = await FavRepo.create<CreateFavRepo>(
+    const repoAdded: IFavRepo = await FavRepo.create<CreateFavRepo>(
       repoFormatted
     );
 
     if (!repoAdded) {
       return res
-        .status(500)
+        .status(404)
         .json({ error: 'Something went wrong and repo could not be added' });
     }
 
@@ -77,17 +84,17 @@ export const addRepo: RequestHandler = async (req, res) => {
       data: repoAdded,
     });
   } catch (error) {
-    throw new Error(error);
+    return res
+      .status(404)
+      .json({ error: 'Server error, repo could not be added' });
   }
 };
 
 export const deleteRepo: RequestHandler = async (req, res) => {
   try {
-    const repoDeleted: FavRepoInterface | null = await FavRepo.findOneAndDelete(
-      {
-        repoId: req.params.id,
-      }
-    );
+    const repoDeleted: IFavRepo | null = await FavRepo.findOneAndDelete({
+      repoId: req.params.id,
+    });
 
     if (!repoDeleted)
       return res.status(404).json({ error: 'Repo not found in favorites' });
@@ -98,6 +105,8 @@ export const deleteRepo: RequestHandler = async (req, res) => {
       data: repoDeleted,
     });
   } catch (error) {
-    throw new Error(error);
+    return res
+      .status(404)
+      .json({ error: 'Server error, repo could not be added' });
   }
 };
