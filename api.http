@@ -7,7 +7,7 @@ POST {{api}}/repos
 Content-Type: application/json
 
 {
-    "owner": "google",
+    "owner": "mauvies",
     "page": 3
 }
 
