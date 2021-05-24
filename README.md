@@ -54,6 +54,8 @@ Inside the project root folder -api- run the following command to build and star
 
 `docker-compose up -d`
 
+Note: In the docker-compose-yml file, the frontend build path must point to the frontend repository location. For example, if the frontend repository is located at the same level as the api repository, then the build path should be `../repo-zoom-frontend`
+
 ### To do
 
 The app is still missing important features such as testing and error handleling, which I have thought about how to implement it, but it woult take much more time. Another cool feature could be filters, since Github API already offers some of them.
