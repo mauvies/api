@@ -44,15 +44,15 @@ The second view corresponds to the favorite repositories which has been added by
 
 ### Docker
 
-To pull backend image
+Run the following commands to pull the backend and frontend docker images
+
 `docker pull mauvies/repo-zoom:backend`
 
-To pull frontend image
 `docker pull mauvies/repo-zoom:frontend`
 
-Or there is another repository which I created to store the docker-compose.yml. At this point I really have no more time to continue working on the test (Friday 21/05/2021 08:57:00), because in a few hours I am leaving with my girlfriend to Granada for her birthday. So, I suggest to create a parent folder with this file (docker-compose.yml) and include the other two projects inside of it (api and frontend). After, the following command can be run and it will start the docker container.
+Inside the project root folder -api- run the following command to build and start the containers
 
-`docker-compose up`
+`docker-compose up -d`
 
 ### To do
 
