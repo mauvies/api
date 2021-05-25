@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 
-import { fetchRepo } from '../../services/fetchApi';
+import { fetchRepo } from '../../services/api';
 import FavRepo, { IFavRepo } from './FavRepo.model';
 
 interface CreateFavRepo {

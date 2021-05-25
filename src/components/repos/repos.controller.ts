@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 
-import { fetchOwnerAccount, fetchOwnerRepos } from '../../services/fetchApi';
+import { fetchOwnerAccount, fetchOwnerRepos } from '../../services/api';
 import { reposPrepareResource, ownerPrepareResource } from './repos.resources';
 import FavRepo, { checkIfRepoIsFav } from '../favorites/FavRepo.model';
 import { IRepoResource, IOwnerResource } from './repos.interfaces';
