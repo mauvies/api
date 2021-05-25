@@ -44,17 +44,9 @@ The second view corresponds to the favorite repositories which has been added by
 
 ### Docker
 
-Run the following commands to pull the backend and frontend docker images
-
-`docker pull mauvies/repo-zoom:backend`
-
-`docker pull mauvies/repo-zoom:frontend`
-
-Inside the project root folder -api- run the following command to build and start the containers
+Run the following command to build and start the containers
 
 `docker-compose up -d`
-
-Note: In the docker-compose-yml file, the frontend build path must point to the frontend repository location. For example, if the frontend repository is located at the same level as the api repository, then the build path should be `../repo-zoom-frontend`
 
 ### To do
 
